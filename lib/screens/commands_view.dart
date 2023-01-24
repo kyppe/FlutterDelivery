@@ -1,19 +1,11 @@
+import 'package:appdelivery/models/command.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class CommmandsPage extends StatelessWidget {
   CommmandsPage({Key? key}) : super(key: key);
   String response = "";
-  void _incrementCounter() async {
-    try {
-      print("aaa");
-
-      var response = await Dio().get('http://192.168.200.89:3000/commands');
-      print(response);
-    } catch (e) {
-      print(e);
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +18,7 @@ class CommmandsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'rafik cringe lv : 999999',
+              'rafik cringe lv : pro',
             ),
             Text(
               response,
@@ -36,7 +28,7 @@ class CommmandsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: null,
         tooltip: 'Increment',
         child: const Icon(Icons.home_sharp),
       ),

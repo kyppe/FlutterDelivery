@@ -1,9 +1,15 @@
+import 'package:appdelivery/Providers/commands_Provider.dart';
 import 'package:appdelivery/screens/commands_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  MultiProvider(providers: [
+    ChangeNotifierProvider(create :(_)=> Commands()),  
+  
+  ],child: const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
