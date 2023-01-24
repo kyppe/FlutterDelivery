@@ -1,37 +1,43 @@
+import 'package:appdelivery/Providers/commands_Provider.dart';
 import 'package:appdelivery/models/command.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CommmandsPage extends StatelessWidget {
   CommmandsPage({Key? key}) : super(key: key);
-  String response = "";
-  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("hola"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'rafik cringe lv : pro',
-            ),
-            Text(
-              response,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    
+    if (context.watch<Commands>().commands.isNotEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("hola"),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Increment',
-        child: const Icon(Icons.home_sharp),
-      ),
-    );
+        body: Center(
+            child: ListView.builder(
+                itemBuilder: (context, index) => Text(
+                    context.watch<Commands>().commands[index].description))),
+        floatingActionButton: FloatingActionButton(
+          onPressed: context.read<Commands>().getAllCommands,
+          tooltip: 'Increment',
+          child: Icon(Icons.home_sharp),
+        ),
+      );
+    }
+    else 
+    {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("hola"),
+        ),
+        body: Center( child :Text("aaa")),
+        floatingActionButton: FloatingActionButton(
+          onPressed: context.read<Commands>().getAllCommands,
+          tooltip: 'Increment',
+          child: Icon(Icons.home_sharp),
+        ),);
+    }
   }
 }

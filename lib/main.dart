@@ -5,11 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  MultiProvider(providers: [
-    ChangeNotifierProvider(create :(_)=> Commands()),  
-  
-  ],child: const MyApp());
-  
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_)  =>Commands())],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     initialRoute: "/",
+      initialRoute: "/",
       routes: {
-        '/' : (context)=>  CommmandsPage(),
+        '/': (context) => CommmandsPage(),
       },
     );
   }

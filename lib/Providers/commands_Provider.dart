@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -5,8 +6,11 @@ import '../models/command.dart';
 
 class Commands with ChangeNotifier 
 {
-  var commands = <Command>[];
-
+  var commands = <Command>[] ;
+Commands()
+{
+  getAllCommands;
+}
   void getAllCommands  () async
   {
     
@@ -16,8 +20,21 @@ class Commands with ChangeNotifier
       {
         commands.add(Command.fromMap(item));
       }
+      for( var command in commands )
+      {
+      print(command.description);
+
+      }
   notifyListeners();
   }
- 
+ @override
+  String toString() {
+     String ch ="";
+      for( var command in commands )
+      {
+      ch=ch+" description"+command.description+" status"+command.status;
+      }
+      return ch ;
+  }
 
 }
