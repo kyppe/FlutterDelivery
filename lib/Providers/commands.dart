@@ -7,13 +7,13 @@ class Commands with ChangeNotifier {
   var commands = <Command>[];
 
   void getAllCommands() async {
-    var response = await Dio().get('http://192.168.200.89:3000/commands');
+    var response = await Dio().get('http://192.168.31.56:3000/commands');
 
     for (var item in response.data) {
       commands.add(Command.fromMap(item));
     }
     for (var command in commands) {
-      print(command.description);
+      print(command.idStore);
     }
     notifyListeners();
   }
