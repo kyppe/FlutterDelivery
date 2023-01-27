@@ -1,4 +1,4 @@
-import 'package:appdelivery/Providers/commands_Provider.dart';
+import 'package:appdelivery/Providers/commands.dart';
 import 'package:appdelivery/screens/commands_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "/",
       routes: {
-        '/': (context) => CommmandsPage(),
+        '/': (context) => CommandsPage(),
       },
     );
   }
