@@ -62,7 +62,7 @@ class _CommandsPageState extends State<CommandsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(children: [
-                    Text(context.watch<Commands>().commands[index].description,
+                    Text(context.watch<Commands>().commands[index].store.name,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
@@ -74,21 +74,22 @@ class _CommandsPageState extends State<CommandsPage> {
                   Text(
                       context
                           .watch<Commands>()
-                          .commands[index]
-                          .destination
+                          .commands[index].store
+                          .location
                           .city
                           .toUpperCase(),
                       style: const TextStyle(fontWeight: FontWeight.bold)),
                   Text(
-                    haversine_distance(36.757154, 10.013860,context.watch<Commands>().commands[index].destination.coordinates[0],context.watch<Commands>().commands[index].destination.coordinates[1]).round().toString()+"km",
+                    haversine_distance(36.757154, 10.013860,context.watch<Commands>().commands[index].store.location.coordinates[0],context.watch<Commands>().commands[index].store.location.coordinates[1]).round().toString()+"km",
                   ),
                   Text(
                     context.watch<Commands>().commands[index].price + "DT",
                   ),
                  const Icon(
                     Icons.run_circle,
-                    color: Colors.yellow,
+                    color: Colors.green,
                     size: 36.0,
+                  
                   ),
                 ],
               ),
