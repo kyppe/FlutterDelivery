@@ -6,7 +6,7 @@ import 'location.dart';
 class Command {
   String description;
   Buyer buyer;
-  String idDriver;
+  String ?idDriver;
   Store store;
   String status;
   String price;
@@ -18,7 +18,7 @@ class Command {
     required this.price,
     required this.description,
     required this.buyer,
-    required this.idDriver,
+     this.idDriver,
     required this.status,
   });
   factory Command.fromMap(Map<String, dynamic> server) {

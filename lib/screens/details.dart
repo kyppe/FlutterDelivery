@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:appdelivery/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,115 +35,51 @@ Widget buildPopupDialog(BuildContext context, int index) {
             ),
             Padding(
               padding: EdgeInsets.all(5.0),
+              child: myText('Store  : ',
+                  context.watch<Commands>().commands[index].store.name),
+            ),
+            Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    myText('Phone  : ',
+                        context.watch<Commands>().commands[index].store.phone),
+                    const Icon(
+                      Icons.phone,
+                      color: Colors.green,
+                      size: 20.0,
+                    ),
+                  ],
+                )),
+            Padding(
+              padding: EdgeInsets.all(5.0),
               child: Row(
                 children: [
-                  const Text('Store  : ',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text(
-                    context.watch<Commands>().commands[index].store.name,
-                    style: const TextStyle(fontSize: 15),
+                  myText(
+                      'Distance  : ',
+                      context
+                              .watch<Commands>()
+                              .commands[index]
+                              .store
+                              .location
+                              .haversine_distance(36.757154, 10.01386)
+                              .round()
+                              .toString() +
+                          " KM "),
+                  const Icon(
+                    Icons.social_distance,
+                    color: Colors.green,
+                    size: 20.0,
                   ),
-                  
                 ],
               ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: 'Phone  : ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                        TextSpan(
-                          text: context
-                                  .watch<Commands>()
-                                  .commands[index]
-                                  .store
-                                  .phone +
-                              " ",
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Icon(
-                  Icons.phone,
-                  color: Colors.green,
-                  size: 20.0,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: 'Distance : ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                        TextSpan(
-                          text: context
-                                  .watch<Commands>()
-                                  .commands[index]
-                                  .store
-                                  .location
-                                  .haversine_distance(36.757154, 10.01386)
-                                  .round()
-                                  .toString() +
-                              " KM ",
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Icon(
-                  Icons.social_distance,
-                  color: Colors.green,
-                  size: 20.0,
-                ),
-              ],
             ),
             Padding(
                 padding: EdgeInsets.all(5.0),
                 child: Row(children: [
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: 'Command : ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                        TextSpan(
-                          text: context
-                              .watch<Commands>()
-                              .commands[index]
-                              .description,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
+                  myText(
+                    'Command : ',
+                    context.watch<Commands>().commands[index].description,
                   ),
                   const Icon(
                     Icons.add_shopping_cart_rounded,
@@ -162,112 +99,63 @@ Widget buildPopupDialog(BuildContext context, int index) {
                   color: Colors.blue,
                   fontWeight: FontWeight.bold),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: 'full Name  : ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                        TextSpan(
-                          text: context
-                              .watch<Commands>()
-                              .commands[index]
-                              .buyer
-                              .fullName,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ],
+            Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    myText(
+                        'full Name  : ',
+                        context
+                            .watch<Commands>()
+                            .commands[index]
+                            .buyer
+                            .fullName),
+                    const Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                      size: 20.0,
                     ),
-                  ),
-                ),
-                const Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                  size: 20.0,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.black,
-                        ),
-                        children: <TextSpan>[
-                          const TextSpan(
-                              text: 'Phone  : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15)),
-                          TextSpan(
-                            text: context
-                                    .watch<Commands>()
-                                    .commands[index]
-                                    .buyer
-                                    .phoneNumber +
-                                " ",
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    )),
-                const Icon(
-                  Icons.phone,
-                  color: Colors.green,
-                  size: 20.0,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: 'distance : ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                        TextSpan(
-                          text: context
-                                  .watch<Commands>()
-                                  .commands[index]
-                                  .buyer
-                                  .location
-                                  .haversine_distance(36.757154, 10.01386)
-                                  .round()
-                                  .toString() +
-                              " KM ",
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ],
+                  ],
+                )),
+            Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    myText(
+                        "Phone  : ",
+                        context
+                            .watch<Commands>()
+                            .commands[index]
+                            .buyer
+                            .phoneNumber),
+                    const Icon(
+                      Icons.phone,
+                      color: Colors.green,
+                      size: 20.0,
                     ),
-                  ),
-                ),
-                const Icon(
-                  Icons.social_distance,
-                  color: Colors.green,
-                  size: 20.0,
-                ),
-              ],
-            ),
+                  ],
+                )),
+            Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    myText(
+                        "distance : ",
+                        context
+                            .watch<Commands>()
+                            .commands[index]
+                            .buyer
+                            .location
+                            .haversine_distance(36.757154, 10.01386)
+                            .round()
+                            .toString()),
+                    const Icon(
+                      Icons.social_distance,
+                      color: Colors.green,
+                      size: 20.0,
+                    ),
+                  ],
+                )),
             const Padding(
               padding: EdgeInsets.all(15),
               child: Divider(color: Colors.grey),
