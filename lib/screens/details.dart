@@ -177,7 +177,7 @@ Widget buildPopupDialog(BuildContext context, int index) {
                             .round()
                             .toString() +
                         " KM ",
-                    style: const TextStyle(fontSize: 15)),
+                    style: const TextStyle(fontSize: 10)),
                 const Icon(
                   Icons.store,
                   color: Colors.black,
@@ -205,7 +205,7 @@ Widget buildPopupDialog(BuildContext context, int index) {
                             .round()
                             .toString() +
                         " KM ",
-                    style: const TextStyle(fontSize: 15)),
+                    style: const TextStyle(fontSize: 10)),
                 const Icon(
                   Icons.person,
                   color: Colors.black,
@@ -251,7 +251,8 @@ Widget buildPopupDialog(BuildContext context, int index) {
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.green)))),
         onPressed: () {
-          Navigator.of(context).pop();
+          Provider.of<Commands>(context, listen: false).acceptedCommand(index);
+           Navigator.of(context).pop();
         },
         child: const Text('accept'),
       ),

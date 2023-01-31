@@ -5,6 +5,7 @@ import '../models/command.dart';
 
 class Commands with ChangeNotifier {
   var commands = <Command>[];
+  var commandsAccepted = <Command>[];
 
   void getAllCommands() async {
     var response = await Dio().get('http://192.168.200.89:3000/commands');
@@ -15,6 +16,14 @@ class Commands with ChangeNotifier {
     for (var command in commands) {
       print(command.store.name);
     }
+    notifyListeners();
+  }
+
+  void acceptedCommand(int index) async {
+    commandsAccepted.add(commands[index]);
+
+    commands.remove(commands[index]);
+
     notifyListeners();
   }
 

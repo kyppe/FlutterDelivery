@@ -1,43 +1,27 @@
-import 'dart:ffi';
-import 'dart:math';
 import 'package:appdelivery/Providers/commands.dart';
-import 'package:appdelivery/models/command.dart';
-import 'package:appdelivery/screens/details.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:geocode/geocode.dart';
+import 'package:provider/src/provider.dart';
 
-import 'package:provider/provider.dart';
+import 'details.dart';
 
-class CommandsPage extends StatefulWidget {
-  const CommandsPage({Key? key}) : super(key: key);
+class AcceptedCommandPage extends StatefulWidget {
+  const AcceptedCommandPage({Key? key}) : super(key: key);
 
   @override
-  State<CommandsPage> createState() => _CommandsPageState();
+  State<AcceptedCommandPage> createState() => _AcceptedCommandPageState();
 }
 
-Future<String> _getAddress(double? lat, double? lang) async {
-  if (lat == null || lang == null) return "";
-  GeoCode geoCode = GeoCode();
-  Address address =
-      await geoCode.reverseGeocoding(latitude: lat, longitude: lang);
-  print(
-      "${address.streetAddress}, ${address.city}, ${address.countryName}, ${address.postal}");
-  return "${address.streetAddress}, ${address.city}, ${address.countryName}, ${address.postal}";
-}
-
-class _CommandsPageState extends State<CommandsPage> {
-  @override
+class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("all commands"),
+        title: const Text("all commands Accepted"),
         centerTitle: true,
       ),
       body: Center(
         child: ListView.separated(
-          itemCount: context.watch<Commands>().commands.length,
+          itemCount: context.watch<Commands>().commandsAccepted.length,
           separatorBuilder: (BuildContext context, int index) =>
               const Divider(),
           itemBuilder: (BuildContext context, int index) {
@@ -69,7 +53,7 @@ class _CommandsPageState extends State<CommandsPage> {
                                 color: Colors.blue,
                                 fontSize: 20)),
                         Text(
-                          context.watch<Commands>().commands[index].date,
+                          context.watch<Commands>().commandsAccepted[index].date,
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 10),
                         ),
@@ -97,7 +81,7 @@ class _CommandsPageState extends State<CommandsPage> {
                           "km",
                     ),
                     Text(
-                      context.watch<Commands>().commands[index].price + "DT",
+                      context.watch<Commands>().commandsAccepted[index].price + "DT",
                     ),
                     const Icon(
                       Icons.run_circle,
