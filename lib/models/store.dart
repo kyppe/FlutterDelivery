@@ -12,13 +12,11 @@ class Store {
       location: Location.fromMap(server["location"]),
     );
   }
-    Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       "name": name,
       "phone": phone,
       "location": location,
-
     };
   }
 }
-
