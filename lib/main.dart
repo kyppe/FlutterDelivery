@@ -1,5 +1,7 @@
 import 'package:appdelivery/Providers/commands.dart';
+import 'package:appdelivery/Providers/user_provider.dart';
 import 'package:appdelivery/screens/commands_view.dart';
+import 'package:appdelivery/screens/login_page.dart';
 import 'package:appdelivery/screens/main_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -7,9 +9,19 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_)  =>Commands())],
-    child: const MyApp(),
-  ));
+    providers: [
+      ChangeNotifierProvider.value(value: User()),
+      ChangeNotifierProxyProvider<User,Commands>(
+        create: (ctx) => Commands(),
+        update:(_,user,data)=> data!..update(user.token,user.idUser))
+    
+    ] ,
+          child: const MyApp()
+
+      ),
+      
+  );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +33,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "/",
       routes: {
-        '/': (context) => MainPageState(),
+        '/': (context) => LoginPage(),
+        '/MainPage':((context) => MainPageState())
       },
     );
   }

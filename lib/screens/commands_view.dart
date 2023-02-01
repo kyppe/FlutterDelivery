@@ -32,6 +32,7 @@ class _CommandsPageState extends State<CommandsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("all commands"),
         centerTitle: true,
       ),

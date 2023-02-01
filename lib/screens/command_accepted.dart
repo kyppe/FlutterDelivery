@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
 import 'details.dart';
+import 'details_accept.dart';
 
 class AcceptedCommandPage extends StatefulWidget {
   const AcceptedCommandPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("all commands Accepted"),
         centerTitle: true,
       ),
@@ -32,7 +34,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                   builder: (
                     BuildContext context,
                   ) =>
-                      buildPopupDialog(context, index),
+                      buildPopupDialogAccepted(context, index),
                 );
               },
               child: Padding(
@@ -45,7 +47,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                         Text(
                             context
                                 .watch<Commands>()
-                                .commands[index]
+                                .commandsAccepted[index]
                                 .store
                                 .name,
                             style: const TextStyle(
@@ -53,7 +55,10 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                                 color: Colors.blue,
                                 fontSize: 20)),
                         Text(
-                          context.watch<Commands>().commandsAccepted[index].date,
+                          context
+                              .watch<Commands>()
+                              .commandsAccepted[index]
+                              .date,
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 10),
                         ),
@@ -62,7 +67,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                     Text(
                       context
                           .watch<Commands>()
-                          .commands[index]
+                          .commandsAccepted[index]
                           .store
                           .location
                           .city
@@ -72,7 +77,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                     Text(
                       context
                               .watch<Commands>()
-                              .commands[index]
+                              .commandsAccepted[index]
                               .store
                               .location
                               .haversine_distance(36.757154, 10.01386)
@@ -81,7 +86,8 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                           "km",
                     ),
                     Text(
-                      context.watch<Commands>().commandsAccepted[index].price + "DT",
+                      context.watch<Commands>().commandsAccepted[index].price +
+                          "DT",
                     ),
                     const Icon(
                       Icons.run_circle,
