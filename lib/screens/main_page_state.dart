@@ -35,12 +35,12 @@ class _MainPageStateState extends State<MainPageState> {
         onTap: (index) => setState(() => currentIndex = index),
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.social_distance),
-              label: "home",
+              icon: Icon(Icons.delivery_dining_sharp),
+              label: "All commands",
               backgroundColor: Colors.blue),
           BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit),
-              label: "lol",
+              icon: Icon(Icons.add_task_sharp),
+              label: "Accepted Commands",
               backgroundColor: Colors.orange)
         ],
       ),

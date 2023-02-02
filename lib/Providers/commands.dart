@@ -9,26 +9,27 @@ class Commands with ChangeNotifier {
   late String tokenUser;
   late String idUser;
   //String url="http://192.168.200.89:3000/commands" ;
-  String url="http://192.168.31.54:3000/commands" ;
+  String url = "http://192.168.31.54:3000/commands";
 
   void getAllCommands() async {
     var response = await Dio().get(url);
     print(idUser);
     for (var item in response.data) {
-      commands.add(Command.fromMap(item));
+      if (item["idDriver"] == idUser) {
+        commandsAccepted.add(Command.fromMap(item));
+      } else if (item["status"] == "pending") {
+        commands.add(Command.fromMap(item));
+      }
     }
-    for (var command in commands) {
-      print(command.store.name);
-    }
+
     notifyListeners();
   }
 
   void acceptedCommand(int index) async {
     print(commandsAccepted.length);
     final data = {"idDriver": idUser};
-    var response = await Dio().patch(
-        url+'/accept/${commands[index].idCommand}',
-        data: data);
+    var response = await Dio()
+        .patch(url + '/accept/${commands[index].idCommand}', data: data);
     commandsAccepted.add(commands[index]);
 
     commands.remove(commands[index]);
@@ -41,10 +42,10 @@ class Commands with ChangeNotifier {
   }
 
   void abandonedCommand(int index) async {
-        commands.add(commandsAccepted[index]);
+    commands.add(commandsAccepted[index]);
 
-    var response = await Dio().patch(
-        url+'/abandoned/${commandsAccepted[index].idCommand}');
+    var response = await Dio()
+        .patch(url + '/abandoned/${commandsAccepted[index].idCommand}');
 
     commandsAccepted.remove(commandsAccepted[index]);
     notifyListeners();

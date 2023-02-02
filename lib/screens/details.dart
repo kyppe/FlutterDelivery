@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/commands.dart';
+import '../components/mapClass.dart';
 
 // ignore: unused_element
 Widget buildPopupDialog(BuildContext context, int index) {
@@ -224,8 +225,8 @@ Widget buildPopupDialog(BuildContext context, int index) {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.blue)))),
-                onPressed: () {
-                  Navigator.of(context).pop();
+                onPressed: () async {
+          //        await MapUtils.openMap(30.625168, 131.751500);
                 },
                 child: const Text('See google map path '),
               ),
@@ -252,7 +253,7 @@ Widget buildPopupDialog(BuildContext context, int index) {
                     side: BorderSide(color: Colors.green)))),
         onPressed: () {
           Provider.of<Commands>(context, listen: false).acceptedCommand(index);
-           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         },
         child: const Text('accept'),
       ),
