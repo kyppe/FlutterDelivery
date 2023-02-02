@@ -1,8 +1,10 @@
+import 'package:appdelivery/Providers/user_provider.dart';
 import 'package:appdelivery/screens/main_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -62,10 +64,18 @@ class _LoginPageState extends State<LoginPage> {
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                           side: const BorderSide(color: Colors.blue)))),
-              onPressed: () {
+              onPressed: () async {
                 print(passWordController.text);
                 print(loginController.text);
+                if( await context.read<User>().login(loginController.text,passWordController.text))
+                {
                 Navigator.pushNamed(context, '/MainPage');  
+
+                }
+                else 
+                {
+                  print("error");
+                }
               },
               child: const Text('connect'),
             ),

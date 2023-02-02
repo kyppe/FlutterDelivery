@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider.value(value: User()),
+      ChangeNotifierProvider.value(value: User(idUser: null, phone: null, userName: null)),
       ChangeNotifierProxyProvider<User,Commands>(
         create: (ctx) => Commands(),
         update:(_,user,data)=> data!..update(user.token,user.idUser))

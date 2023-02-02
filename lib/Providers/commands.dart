@@ -8,8 +8,8 @@ class Commands with ChangeNotifier {
   var commandsAccepted = <Command>[];
   late String tokenUser;
   late String idUser;
-  String url="http://192.168.200.89:3000/commands" ;
-  //  String url="http://192.168.31.54:3000/commands" ;
+  //String url="http://192.168.200.89:3000/commands" ;
+  String url="http://192.168.31.54:3000/commands" ;
 
   void getAllCommands() async {
     var response = await Dio().get(url);
@@ -29,7 +29,6 @@ class Commands with ChangeNotifier {
     var response = await Dio().patch(
         url+'/accept/${commands[index].idCommand}',
         data: data);
-        print("dezdez");
     commandsAccepted.add(commands[index]);
 
     commands.remove(commands[index]);
