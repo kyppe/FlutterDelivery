@@ -12,7 +12,12 @@ class Commands with ChangeNotifier {
   String url = "http://192.168.31.54:3000/commands";
 
   void getAllCommands() async {
-    var response = await Dio().get(url);
+    Dio dio = new Dio();
+   commands = <Command>[];
+   commandsAccepted = <Command>[];
+    dio.options.headers["authorization"] = tokenUser;
+
+    var response = await dio.get(url);
     print(idUser);
     for (var item in response.data) {
       if (item["idDriver"] == idUser) {
@@ -26,10 +31,14 @@ class Commands with ChangeNotifier {
   }
 
   void acceptedCommand(int index) async {
+    Dio dio = new Dio();
+
+    dio.options.headers["authorization"] = tokenUser;
+
     print(commandsAccepted.length);
     final data = {"idDriver": idUser};
-    var response = await Dio()
-        .patch(url + '/accept/${commands[index].idCommand}', data: data);
+    var response = await dio.patch(url + '/accept/${commands[index].idCommand}',
+        data: data);
     commandsAccepted.add(commands[index]);
 
     commands.remove(commands[index]);
@@ -42,10 +51,14 @@ class Commands with ChangeNotifier {
   }
 
   void abandonedCommand(int index) async {
-    commands.add(commandsAccepted[index]);
+    Dio dio = new Dio();
 
-    var response = await Dio()
+    dio.options.headers["authorization"] = tokenUser;
+
+
+    var response = await dio
         .patch(url + '/abandoned/${commandsAccepted[index].idCommand}');
+    commands.add(commandsAccepted[index]);
 
     commandsAccepted.remove(commandsAccepted[index]);
     notifyListeners();

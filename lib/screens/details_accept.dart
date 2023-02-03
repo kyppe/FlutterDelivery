@@ -262,8 +262,8 @@ Widget buildPopupDialogAccepted(BuildContext context, int index) {
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                     side: const BorderSide(color: Colors.red)))),
-        onPressed: () {
-          Provider.of<Commands>(context, listen: false).abandonedCommand(index);
+        onPressed: () async{
+        Provider.of<Commands>(context, listen: false).abandonedCommand(index);
           Navigator.of(context).pop();
         },
         child: const Text('Abandoned'),

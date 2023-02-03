@@ -9,6 +9,8 @@ import 'package:geocode/geocode.dart';
 
 import 'package:provider/provider.dart';
 
+import 'nav_Bar.dart';
+
 class CommandsPage extends StatefulWidget {
   const CommandsPage({Key? key}) : super(key: key);
 
@@ -31,11 +33,12 @@ class _CommandsPageState extends State<CommandsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text("all commands"),
         centerTitle: true,
       ),
+      drawer: NavBar(),
       body: Center(
         child: ListView.separated(
           itemCount: context.watch<Commands>().commands.length,

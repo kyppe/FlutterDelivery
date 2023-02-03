@@ -4,6 +4,7 @@ import 'package:provider/src/provider.dart';
 
 import 'details.dart';
 import 'details_accept.dart';
+import 'nav_Bar.dart';
 
 class AcceptedCommandPage extends StatefulWidget {
   const AcceptedCommandPage({Key? key}) : super(key: key);
@@ -16,8 +17,8 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text("all commands Accepted"),
         centerTitle: true,
       ),

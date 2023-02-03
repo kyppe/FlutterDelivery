@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import '../models/location.dart';
 
 class User with ChangeNotifier {
-  late String userName;
+  String userName = "";
   String idUser = "123456789123456789123456";
   String token = " ";
+  String email = " ";
   late String phone;
   late Location location;
   User({required phone, required userName, required idUser});
@@ -23,9 +24,12 @@ class User with ChangeNotifier {
       } else {
         User.fromMap(response.data);
 
-        userName = response.data["fullName"];
-        phone = response.data["phoneNumber"];
-        idUser = response.data["_id"];
+        userName = response.data["driver"]["fullName"];
+        phone = response.data["driver"]["phoneNumber"];
+        idUser = response.data["driver"]["_id"];
+        email = response.data["driver"]["email"];
+
+        token = response.data["token"];
 
         print(idUser);
 
