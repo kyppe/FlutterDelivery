@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:appdelivery/Providers/commands.dart';
 import 'package:appdelivery/Providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,6 @@ class NavBar extends StatelessWidget {
           ListTile(
             title: Text('Exit'),
             leading: Icon(Icons.exit_to_app),
-            iconColor: Colors.red,
             onTap: () => Navigator.pushNamed(context, "/"),
           ),
         ],

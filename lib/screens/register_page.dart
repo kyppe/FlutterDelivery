@@ -25,45 +25,66 @@ class RegisterPageView extends StatefulWidget {
 }
 
 class _RegisterPageViewState extends State<RegisterPageView> {
- 
   var comp = Componnets();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passcontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
 
+  bool test = true;
   @override
   Widget build(BuildContext context) {
-       TextEditingController emailcontroller = TextEditingController();
-        TextEditingController passcontroller = TextEditingController();
-  TextEditingController usernamecontroller = TextEditingController();
-    TextEditingController cincontroller = TextEditingController();
-
-      return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:  [
-            comp.myContainer(
-              
-              200,
-              80,
-              4,
-              "Registration",
-              const TextStyle(fontFamily :'arial',fontWeight: FontWeight.bold,fontSize: 20 )),
-          
-            comp.textInput(emailcontroller,"Email",false ) ,   
-            comp.textInput(usernamecontroller,"Username",false ) ,   
-            comp.textInput(passcontroller,"Password",true ) ,   
-            comp.myButton(cincontroller,emailcontroller,passcontroller,usernamecontroller,"create", comp.buttonStyle(Colors.blue,Colors.white,const TextStyle(fontFamily:'arial',fontSize: 20))),
-              RichText(
-                text : const TextSpan(
-               text : "do you have an account  ?  ",
-                    style: TextStyle( color: Colors.black, fontSize: 10, fontFamily: 'arial',),
-                    children: [
-                      TextSpan(text: "login now",
-                      style: TextStyle( color: Colors.blue,fontWeight: FontWeight.bold ,fontSize: 10, fontFamily: 'arial',),
-                      )
-                    ] 
-                ),
-                    ),
-        
+    return SingleChildScrollView(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        comp.myContainer(
+            200,
+            80,
+            4,
+            "Registration",
+            const TextStyle(
+                fontFamily: 'arial',
+                fontWeight: FontWeight.bold,
+                fontSize: 20)),
+        comp.textEmail(emailcontroller, "Email", false),
+        comp.textPhone(phonecontroller, "phone", false),
+        comp.textIFullName(usernamecontroller, "Username", false),
+        comp.textPassword(passcontroller, "Password", true),
+        comp.myButton(
+          emailcontroller,
+          passcontroller,
+          usernamecontroller,
+          phonecontroller,
+          "create",
+          comp.buttonStyle(
+            Colors.blue,
+            Colors.white,
+            const TextStyle(fontFamily: 'arial', fontSize: 20),
+          ),
+          context,
+        ),
+        RichText(
+          text: const TextSpan(
+              text: "do you have an account  ?  ",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 10,
+                fontFamily: 'arial',
+              ),
+              children: [
+                TextSpan(
+                  text: "login now",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    fontFamily: 'arial',
+                  ),
+                )
+              ]),
+        ),
       ],
-      ));
+    ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:appdelivery/Providers/user_provider.dart';
+import 'package:appdelivery/components/components.dart';
 import 'package:appdelivery/screens/main_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -15,80 +16,85 @@ class LoginPage extends StatefulWidget {
 
 var loginController = TextEditingController();
 var passWordController = TextEditingController();
+var comp = Componnets();
 
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Login"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                controller: loginController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                  hintText: 'Enter Your Name',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                controller: passWordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  hintText: 'Enter Password',
-                ),
-              ),
-            ),
-            Center(
-              child: Row(children: [
-                const Text("                     don't have account "),
-                InkWell(
-                  child: const Text('Create One',
-                      style: TextStyle(color: Colors.blue)),
-                  // ignore: avoid_returning_null_for_void
-                  onTap: () => Navigator.pushNamed(context, "/Register"),
-                ),
-              ]),
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(color: Colors.blue)))),
-              onPressed: () async {
-                print(passWordController.text);
-                print(loginController.text);
-                if (await context
-                    .read<User>()
-                    .login(loginController.text, passWordController.text)) {
-                  Navigator.pushNamed(context, '/MainPage');
-                } else {
-                  print("error");
-                }
-              },
-              child: const Text('connect'),
-            ),
-          ],
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text("Login"),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        child: Text(
+                          "  Email",
+                        ),
+                      ),
+                    ),
+                    comp.textEmail(loginController, "Email", false)
+                  ]),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        child: Text(
+                          "   Password",
+                        ),
+                      ),
+                    ),
+                    comp.textPassword(passWordController, "Password", true),
+                  ]),
+                ),
+                Center(
+                  child: Row(children: [
+                    const Text("                     don't have account "),
+                    InkWell(
+                      child: const Text('Create One',
+                          style: TextStyle(color: Colors.blue)),
+                      // ignore: avoid_returning_null_for_void
+                      onTap: () => Navigator.pushNamed(context, "/Register"),
+                    ),
+                  ]),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: const BorderSide(color: Colors.blue)))),
+                  onPressed: () async {
+                    if (await context
+                        .read<User>()
+                        .login(loginController.text, passWordController.text)) {
+                      Navigator.pushNamed(context, '/MainPage');
+                    } else {
+                      print("error");
+                    }
+                  },
+                  child: const Text('connect'),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

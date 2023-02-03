@@ -6,9 +6,15 @@ import 'package:appdelivery/screens/main_page_state.dart';
 import 'package:appdelivery/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:provider/provider.dart';
 
+import 'components/components.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiProvider(
       providers: [

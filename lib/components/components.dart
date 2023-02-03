@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +7,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget myText(String title, String text) {
   return Row(
@@ -21,13 +21,6 @@ Widget myText(String title, String text) {
 }
 
 class Componnets {
-  var myStyle =
-      GoogleFonts.poppins(color: Colors.grey[700], fontWeight: FontWeight.bold);
-  var myStyle2 = GoogleFonts.fruktur(
-      color: Colors.red[700], fontWeight: FontWeight.normal);
-  var myStyle3 =
-      GoogleFonts.fruktur(color: Colors.black, fontWeight: FontWeight.bold);
-
   myAvatar(double? radius, String path) {
     return CircleAvatar(
       backgroundImage: AssetImage(path),
@@ -35,40 +28,41 @@ class Componnets {
     );
   }
 
-  void testmail(TextEditingController name) {
-
+  bool testmail(TextEditingController name) {
+    print(name.text);
     if (!(GetUtils.isEmail(name.text))) {
-
-      Get.snackbar('incorrect'.tr, 'Email format bad'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
-
+      return false;
     }
+    return true;
   }
 
-  void testpassword(TextEditingController name) {
-    if (!(GetUtils.isLengthGreaterOrEqual(name.text, 8))) {
-      Get.snackbar('incorrect'.tr, 'password length should be 8 or more'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
-    } else if ((GetUtils.isAlphabetOnly(name.text))) {
-      Get.snackbar('incorrect'.tr, 'need to at least one number'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
-    } else if (!(GetUtils.hasCapitalletter(name.text))) {
-      Get.snackbar('incorrect'.tr, 'need at least one Capital letter'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
+  bool testpassword(TextEditingController name) {
+    if (!(GetUtils.isLengthGreaterOrEqual(name.text, 5))) {
+      return false;
     }
+    return true;
   }
 
-  void testcin(TextEditingController name) {
+  bool testcin(TextEditingController name) {
     if (!(GetUtils.isNum(name.text))) {
-      Get.snackbar('incorrect'.tr, 'should be only number'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
+      return false;
+    }
+    return true;
+  }
+
+  bool testusername(TextEditingController name) {
+    if (!(GetUtils.isGreaterThan(name.text.length, 5))) {
+      return false;
+    } else {
+      return true;
     }
   }
 
-  void testusername(TextEditingController name) {
-    if (!(GetUtils.isUsername(name.text))) {
-      Get.snackbar('incorrect'.tr, 'username format bad'.tr,
-          backgroundColor: Colors.red[900], snackPosition: SnackPosition.TOP);
+  bool testPhone(TextEditingController name) {
+    if (!GetUtils.isPhoneNumber(name.text)) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -111,45 +105,209 @@ class Componnets {
         child: Text(text));
   }
 
-  void test(TextEditingController cin, TextEditingController email,
-      TextEditingController password, TextEditingController username) {
-    testmail(email);
-    testusername(username);
-    testcin(cin);
-    testpassword(password);
+  bool test(TextEditingController email, TextEditingController password,
+      TextEditingController username, TextEditingController phone) {
+    print(testmail(email));
+    print(testusername(username));
+
+    print(testpassword(password));
+    print(testPhone(phone));
+
+    return testmail(email) == true &&
+        testusername(username) == true &&
+        testpassword(password) == true &&
+        testPhone(phone);
   }
 
   myButton(
-      TextEditingController cin,
       TextEditingController email,
       TextEditingController password,
       TextEditingController username,
+      TextEditingController phone,
       String textbox,
-      ButtonStyle style) {
+      ButtonStyle style,
+      BuildContext context) {
     return ElevatedButton(
         style: style,
-        onPressed: () {
-          test(cin, email, password, username);
+        onPressed: () async {
+          print(test(email, password, username, phone));
+          if (test(email, password, username, phone)) {
+            print("azeza");
+            String url = "http://192.168.200.89:3000/driver/register";
+            // String url = "http://192.168.31.54:3000/commands";
+            Dio dio = new Dio();
+            final data = {
+              "email": email.text,
+              "password": password.text,
+              "fullName": username.text,
+              "phoneNumber": phone.text
+            };
+            var response = await dio.post(url, data: data);
+            print("aaaaaaaaaaaaaaaa");
+            Navigator.pushNamed(context, '/');
+
+            print(response);
+          }
         },
         child: Text(textbox));
   }
 
-  myImage(String path) {
-    return Image(image: AssetImage(path));
+  textIFullName(TextEditingController name, String labe, bool obscure,
+      {Function? fun}) {
+    return Padding(
+        padding: EdgeInsets.all(15),
+        child: TextFormField(
+          obscureText: obscure,
+          controller: name,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            fillColor: const Color(0xffEEF2F7),
+            hintText: labe,
+            filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Color(0xff535FF7), width: 2),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.pink[400]!, width: 2),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: (value) {
+            if (!GetUtils.isLengthGreaterThan(value, 5)) {
+              // ignore: void_checks
+              return "Min 5 chars";
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 
-  textInput(TextEditingController name, String labe, bool obscure,
+  textEmail(TextEditingController name, String labe, bool obscure,
+      {Function? fun}) {
+    return Padding(
+        padding: EdgeInsets.all(15),
+        child: TextFormField(
+          controller: name,
+          obscureText: obscure,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            fillColor: const Color(0xffEEF2F7),
+            hintText: labe,
+            filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Color(0xff535FF7), width: 2),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.pink[400]!, width: 2),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          validator: (value) {
+            if (!GetUtils.isEmail(value!)) {
+              // ignore: void_checks
+              return "forma email bad";
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  textPhone(TextEditingController name, String labe, bool obscure,
       {Function? fun}) {
     return Padding(
       padding: EdgeInsets.all(15),
-      child: TextField(
+      child: TextFormField(
         controller: name,
         obscureText: obscure,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: labe,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          fillColor: const Color(0xffEEF2F7),
           hintText: labe,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff535FF7), width: 2),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.pink[400]!, width: 2),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
+        validator: (value) {
+          if (!GetUtils.isPhoneNumber(value!)) {
+            return "not a phone number";
+          } else {
+            return null;
+          }
+        },
+      ),
+    );
+  }
+
+  textPassword(TextEditingController name, String labe, bool obscure,
+      {Function? fun}) {
+    return Padding(
+      padding: EdgeInsets.all(15),
+      child: TextFormField(
+        controller: name,
+        obscureText: obscure,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          fillColor: const Color(0xffEEF2F7),
+          hintText: labe,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff535FF7), width: 2),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.pink[400]!, width: 2),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        validator: (value) {
+          if (!GetUtils.isLengthGreaterThan(value, 5)) {
+            return "Min 5 chars";
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
