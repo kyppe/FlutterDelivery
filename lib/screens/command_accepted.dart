@@ -2,6 +2,7 @@ import 'package:appdelivery/Providers/commands.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
+import '../Providers/user_provider.dart';
 import 'details.dart';
 import 'details_accept.dart';
 import 'nav_Bar.dart';
@@ -81,7 +82,9 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
                               .commandsAccepted[index]
                               .store
                               .location
-                              .haversine_distance(36.757154, 10.01386)
+                              .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                               .round()
                               .toString() +
                           "km",
@@ -102,11 +105,7 @@ class _AcceptedCommandPageState extends State<AcceptedCommandPage> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.home_sharp),
-      ),
+   
     );
   }
 }

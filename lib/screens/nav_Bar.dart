@@ -4,10 +4,12 @@ import 'package:appdelivery/Providers/commands.dart';
 import 'package:appdelivery/Providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:location/location.dart';
 
 import '../components/components.dart';
 
 class NavBar extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(

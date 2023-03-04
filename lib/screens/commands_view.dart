@@ -9,6 +9,7 @@ import 'package:geocode/geocode.dart';
 
 import 'package:provider/provider.dart';
 
+import '../Providers/user_provider.dart';
 import 'nav_Bar.dart';
 
 class CommandsPage extends StatefulWidget {
@@ -33,7 +34,6 @@ class _CommandsPageState extends State<CommandsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: const Text("all commands"),
         centerTitle: true,
@@ -95,7 +95,9 @@ class _CommandsPageState extends State<CommandsPage> {
                               .commands[index]
                               .store
                               .location
-                              .haversine_distance(36.757154, 10.01386)
+                              .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                               .round()
                               .toString() +
                           "km",
@@ -114,11 +116,6 @@ class _CommandsPageState extends State<CommandsPage> {
             );
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.home_sharp),
       ),
     );
   }

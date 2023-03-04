@@ -131,22 +131,39 @@ class Componnets {
         style: style,
         onPressed: () async {
           print(test(email, password, username, phone));
-          if (test(email, password, username, phone)) {
-            print("azeza");
-            String url = "http://192.168.200.89:3000/driver/register";
-            // String url = "http://192.168.31.54:3000/commands";
-            Dio dio = new Dio();
-            final data = {
-              "email": email.text,
-              "password": password.text,
-              "fullName": username.text,
-              "phoneNumber": phone.text
-            };
-            var response = await dio.post(url, data: data);
-            print("aaaaaaaaaaaaaaaa");
-            Navigator.pushNamed(context, '/');
+          try {
+            if (test(email, password, username, phone)) {
+              print("azeza");
+              String url = "http://192.168.200.89:3000/driver/register";
+              // String url = "http://192.168.31.54:3000/commands";
+              Dio dio = new Dio();
+              final data = {
+                "email": email.text,
+                "password": password.text,
+                "fullName": username.text,
+                "phoneNumber": phone.text
+              };
+              var response = await dio.post(url, data: data);
+              print("aaaaaaaaaaaaaaaa");
+              Navigator.pushNamed(context, '/');
 
-            print(response);
+              print(response);
+            }
+          } catch (e) {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Register failed'),
+                      content: const Text(
+                          'your mail or phone number is already used'),
+                      actions: <Widget>[
+                  
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ));
           }
         },
         child: Text(textbox));

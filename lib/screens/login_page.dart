@@ -87,7 +87,20 @@ class _LoginPageState extends State<LoginPage> {
                         .login(loginController.text, passWordController.text)) {
                       Navigator.pushNamed(context, '/MainPage');
                     } else {
-                      print("error");
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Login failed'),
+                                content: const Text(' Please check your credentials and try again'),
+                                actions: <Widget>[
+                        
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'OK'),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ));
                     }
                   },
                   child: const Text('connect'),

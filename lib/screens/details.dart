@@ -3,12 +3,22 @@
 import 'package:appdelivery/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Providers/commands.dart';
+import '../Providers/user_provider.dart';
 import '../components/mapClass.dart';
 
 // ignore: unused_element
 Widget buildPopupDialog(BuildContext context, int index) {
+  _launchMaps(double x,double y) async {
+   String url = 'https://www.google.com/maps/search/?api=1&query=$x,$y';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
   return new AlertDialog(
     title: Center(child: Text("More details about the \n         command")),
     content: //Center(
@@ -63,7 +73,9 @@ Widget buildPopupDialog(BuildContext context, int index) {
                               .commands[index]
                               .store
                               .location
-                              .haversine_distance(36.757154, 10.01386)
+                              .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                               .round()
                               .toString() +
                           " KM "),
@@ -147,7 +159,9 @@ Widget buildPopupDialog(BuildContext context, int index) {
                             .commands[index]
                             .buyer
                             .location
-                            .haversine_distance(36.757154, 10.01386)
+                            .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                             .round()
                             .toString()),
                     const Icon(
@@ -174,7 +188,9 @@ Widget buildPopupDialog(BuildContext context, int index) {
                             .commands[index]
                             .buyer
                             .location
-                            .haversine_distance(36.757154, 10.01386)
+                            .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                             .round()
                             .toString() +
                         " KM ",
@@ -200,7 +216,7 @@ Widget buildPopupDialog(BuildContext context, int index) {
                                 context
                                     .watch<Commands>()
                                     .commands[index]
-                                    .buyer
+                                    .store
                                     .location
                                     .coordinates[1])
                             .round()
@@ -226,7 +242,7 @@ Widget buildPopupDialog(BuildContext context, int index) {
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.blue)))),
                 onPressed: () async {
-          //        await MapUtils.openMap(30.625168, 131.751500);
+                  _launchMaps(context.read<Commands>().commands[index].store.location.coordinates[0],context.read<Commands>().commands[index].store.location.coordinates[1]);
                 },
                 child: const Text('See google map path '),
               ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/commands.dart';
+import '../Providers/user_provider.dart';
 import '../components/components.dart';
 // ignore: unused_element
 
@@ -68,7 +69,9 @@ Widget buildPopupDialogAccepted(BuildContext context, int index) {
                               .commandsAccepted[index]
                               .store
                               .location
-                              .haversine_distance(36.757154, 10.01386)
+                              .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                               .round()
                               .toString() +
                           " KM "),
@@ -155,7 +158,9 @@ Widget buildPopupDialogAccepted(BuildContext context, int index) {
                             .commandsAccepted[index]
                             .buyer
                             .location
-                            .haversine_distance(36.757154, 10.01386)
+                            .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                             .round()
                             .toString()),
                     const Icon(
@@ -182,7 +187,9 @@ Widget buildPopupDialogAccepted(BuildContext context, int index) {
                             .commandsAccepted[index]
                             .buyer
                             .location
-                            .haversine_distance(36.757154, 10.01386)
+                            .haversine_distance(context
+                              .watch<User>().location.latitude, context
+                              .watch<User>().location.longitude)
                             .round()
                             .toString() +
                         " KM ",
